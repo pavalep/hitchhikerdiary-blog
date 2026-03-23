@@ -14,6 +14,13 @@ pnpm-debug.log*
 .env.local
 .env.*.local
 
+# Ghost data backups and temporary files
+backups/
+*.sql
+
+# Docker overrides
+docker-compose.override.yml
+
 # Editor/OS
 .vscode/
 .DS_Store

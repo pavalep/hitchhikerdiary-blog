@@ -1,0 +1,441 @@
+<!DOCTYPE html>
+<html{{#match @custom.color_scheme "Dark"}} class="theme-dark"{{/match}}{{#match @custom.color_scheme "Light"}} class="theme-light"{{/match}} lang="{{@site.locale}}">
+
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>{{meta_title page=(t " (Page %)")}}</title>
+    <link rel="stylesheet" href="{{asset "built/screen.css"}}">
+    <style>
+        body,
+        .site,
+        .site-content,
+        .site-main,
+        .gh-feed,
+        .featured-wrapper,
+        .gh-foot {
+            background: #ffffff;
+        }
+
+        .home-cinema-hero {
+            position: relative;
+            width: 100vw;
+            margin: 0 calc(50% - 50vw) 42px;
+            overflow: hidden;
+            border-radius: 0;
+            border: 0;
+            box-shadow: none;
+            background: #fff;
+        }
+
+        .home-cinema-track {
+            display: flex;
+            transition: transform 0.7s ease;
+        }
+
+        .home-cinema-slide {
+            min-width: 100%;
+            position: relative;
+            aspect-ratio: 21 / 8;
+            overflow: hidden;
+        }
+
+        .home-cinema-slide img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            filter: grayscale(95%) contrast(106%);
+        }
+
+        .home-cinema-overlay {
+            position: absolute;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            padding: 26px 30px;
+            background: linear-gradient(to top, rgba(0, 0, 0, 0.62), rgba(0, 0, 0, 0.08));
+            color: #fff;
+        }
+
+        .home-cinema-kicker {
+            letter-spacing: 0.12em;
+            text-transform: uppercase;
+            font-size: 1.1rem;
+            margin-bottom: 6px;
+        }
+
+        .home-cinema-title {
+            margin: 0;
+            font-size: clamp(2rem, 3.6vw, 4rem);
+            line-height: 1.05;
+            font-weight: 700;
+        }
+
+        .home-cinema-links {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 10px;
+            padding: 16px 18px;
+            border-top: 1px solid #efeff3;
+            background: #fff;
+        }
+
+        .home-cinema-link {
+            display: inline-flex;
+            align-items: center;
+            padding: 8px 13px;
+            border: 1px solid #dadce3;
+            border-radius: 999px;
+            color: #121318;
+            text-decoration: none;
+            font-size: 1.25rem;
+            font-weight: 700;
+        }
+
+        .home-cinema-link:hover {
+            border-color: #111;
+            transform: translateY(-1px);
+        }
+
+        .home-cinema-controls {
+            position: absolute;
+            top: 18px;
+            right: 18px;
+            display: flex;
+            gap: 8px;
+            z-index: 4;
+        }
+
+        .home-cinema-btn {
+            width: 38px;
+            height: 38px;
+            border-radius: 999px;
+            border: 0;
+            background: rgba(255, 255, 255, 0.86);
+            color: #141418;
+            font-size: 2rem;
+            line-height: 1;
+            cursor: pointer;
+        }
+
+        .home-cinema-dots {
+            position: absolute;
+            bottom: 18px;
+            right: 20px;
+            display: flex;
+            gap: 6px;
+            z-index: 4;
+        }
+
+        .home-cinema-dot {
+            width: 7px;
+            height: 7px;
+            border-radius: 999px;
+            background: rgba(255, 255, 255, 0.45);
+            border: 0;
+            padding: 0;
+        }
+
+        .home-cinema-dot.active {
+            background: #ffffff;
+        }
+
+        .zen-page {
+            width: min(920px, calc(100% - 30px));
+            margin: 0 auto 64px;
+            color: #111319;
+        }
+
+        .gh-head {
+            background: #ffffff !important;
+            border-bottom: 1px solid #eceef3;
+        }
+
+        .gh-head-inner {
+            padding-top: 12px;
+            padding-bottom: 12px;
+            background: #ffffff;
+        }
+
+        .gh-head-logo {
+            font-size: 2.4rem;
+            line-height: 1.1;
+        }
+
+        .gh-head-subtitle {
+            margin-top: 5px;
+            font-size: 1.25rem;
+            color: #707581;
+            letter-spacing: 0.02em;
+            line-height: 1.4;
+        }
+
+        .zen-intro,
+        .zen-topic {
+            border-bottom: 1px solid #efeff3;
+            padding: 30px 0;
+            background: #ffffff;
+        }
+
+        .zen-kicker {
+            margin: 0 0 10px;
+            font-size: 1rem;
+            letter-spacing: 0.12em;
+            text-transform: uppercase;
+            color: #666b75;
+            font-weight: 700;
+        }
+
+        .zen-title {
+            margin: 0 0 14px;
+            font-size: clamp(2.2rem, 4.3vw, 3.8rem);
+            line-height: 1.08;
+        }
+
+        .zen-topic h2 {
+            margin: 0 0 10px;
+            font-size: clamp(1.8rem, 3.4vw, 2.6rem);
+            line-height: 1.18;
+        }
+
+        .zen-page p {
+            margin: 0 0 13px;
+            font-size: clamp(1.05rem, 1.26vw, 1.22rem);
+            line-height: 1.82;
+            color: #1d212a;
+        }
+
+        .zen-hashtags {
+            font-size: 1rem;
+            color: #646a74;
+            letter-spacing: 0.03em;
+            margin-top: 4px;
+        }
+
+        .zen-post-list {
+            display: grid;
+            gap: 18px;
+            margin-top: 18px;
+        }
+
+        .zen-post-item {
+            border: 1px solid #ebedf2;
+            border-radius: 10px;
+            padding: 18px;
+            background: #ffffff;
+        }
+
+        .zen-post-image-wrap {
+            margin: -18px -18px 14px;
+            border-radius: 10px 10px 0 0;
+            overflow: hidden;
+            border-bottom: 1px solid #ebedf2;
+            background: #f5f6f8;
+            aspect-ratio: 21 / 9;
+        }
+
+        .zen-post-image {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+
+        .zen-post-item h3 {
+            margin: 0 0 8px;
+            font-size: clamp(1.35rem, 2.4vw, 1.75rem);
+            line-height: 1.2;
+        }
+
+        .zen-post-item h3 a {
+            color: #13151c;
+            text-decoration: none;
+        }
+
+        .zen-post-item h3 a:hover {
+            text-decoration: underline;
+        }
+
+        @media (max-width: 900px) {
+            .home-cinema-hero {
+                width: 100vw;
+                margin: 0 calc(50% - 50vw) 22px;
+                border-radius: 0;
+            }
+
+            .home-cinema-slide {
+                aspect-ratio: 16 / 10;
+            }
+
+            .home-cinema-overlay {
+                padding: 18px;
+            }
+
+            .home-cinema-title {
+                font-size: clamp(1.6rem, 8.5vw, 2.7rem);
+            }
+
+            .gh-head-logo {
+                font-size: 2rem;
+            }
+
+            .gh-head-subtitle {
+                font-size: 1.1rem;
+            }
+        }
+    </style>
+
+    {{ghost_head}}
+</head>
+
+<body class='{{body_class}}{{{block "body_class"}}} is-head-{{#match @custom.navigation_layout "Logo on the left"}}left-logo{{else match @custom.navigation_layout "Logo in the middle"}}middle-logo{{else}}stacked{{/match}}{{#match @custom.title_font "=" "Elegant serif"}} has-serif-title{{/match}}{{#match @custom.body_font "=" "Elegant serif"}} has-serif-body{{/match}}'>
+<div class="site">
+
+    <header id="gh-head" class="gh-head gh-outer">
+        <div class="gh-head-inner gh-inner">
+            <div class="gh-head-brand">
+                <div class="gh-head-brand-wrapper">
+                    <a class="gh-head-logo" href="{{@site.url}}">
+                        {{#if @site.logo}}
+                            <img src="{{@site.logo}}" alt="{{@site.title}}">
+                            {{#if @custom.white_logo_for_dark_mode}}
+                                <img src="{{img_url @custom.white_logo_for_dark_mode}}" alt="{{@site.title}}">
+                            {{/if}}
+                        {{else}}
+                            {{@site.title}}
+                        {{/if}}
+                    </a>
+                    <p class="gh-head-subtitle">{{@site.description}}</p>
+                </div>
+                <button class="gh-search gh-icon-btn" aria-label="{{t "Search this site"}}" data-ghost-search>{{> "icons/search"}}</button>
+                <button class="gh-burger" aria-label="{{t "Toggle menu"}}"></button>
+            </div>
+
+            <nav class="gh-head-menu">
+                {{navigation}}
+                {{#unless @site.members_enabled}}
+                    {{#match @custom.navigation_layout "Stacked"}}
+                        <button class="gh-search gh-icon-btn" aria-label="{{t "Search this site"}}" data-ghost-search>{{> "icons/search"}}</button>
+                    {{/match}}
+                {{/unless}}
+            </nav>
+
+            <div class="gh-head-actions">
+                {{#unless @site.members_enabled}}
+                    {{^match @custom.navigation_layout "Stacked"}}
+                        <button class="gh-search gh-icon-btn" aria-label="{{t "Search this site"}}" data-ghost-search>{{> "icons/search"}}</button>
+                    {{/match}}
+                {{else}}
+                    <button class="gh-search gh-icon-btn" aria-label="{{t "Search this site"}}" data-ghost-search>{{> "icons/search"}}</button>
+                    <div class="gh-head-members">
+                        {{#unless @member}}
+                            {{#unless @site.members_invite_only}}
+                                <a class="gh-head-link" href="#/portal/signin" data-portal="signin">{{t "Sign in"}}</a>
+                                <a class="gh-head-btn gh-btn gh-primary-btn" href="#/portal/signup" data-portal="signup">{{t "Subscribe"}}</a>
+                            {{else}}
+                                <a class="gh-head-btn gh-btn gh-primary-btn" href="#/portal/signin" data-portal="signin">{{t "Sign in"}}</a>
+                            {{/unless}}
+                        {{else}}
+                            <a class="gh-head-btn gh-btn gh-primary-btn" href="#/portal/account" data-portal="account">{{t "Account"}}</a>
+                        {{/unless}}
+                    </div>
+                {{/unless}}
+            </div>
+        </div>
+    </header>
+
+    {{#is "home"}}
+        {{> "hero-cinema-carousel"}}
+    {{/is}}
+
+    <div class="site-content">
+        {{#is "home"}}
+            {{> "zen-single-page"}}
+        {{else}}
+            {{{body}}}
+        {{/is}}
+    </div>
+
+    <footer class="gh-foot{{#unless @site.secondary_navigation}} no-menu{{/unless}} gh-outer">
+        <div class="gh-foot-inner gh-inner">
+            <div class="gh-copyright">
+                {{@site.title}} © {{date format="YYYY"}}
+            </div>
+            {{#if @site.secondary_navigation}}
+                <nav class="gh-foot-menu">
+                    {{navigation type="secondary"}}
+                </nav>
+            {{/if}}
+        </div>
+    </footer>
+
+</div>
+
+{{#is "post, page"}}
+    {{> "pswp"}}
+{{/is}}
+
+<script
+    src="https://code.jquery.com/jquery-3.5.1.min.js"
+    integrity="sha256-9/aliU8dGd2tb6OSsuzixeV4y/faTqgFtohetphbbj0="
+    crossorigin="anonymous">
+</script>
+<script src='{{asset "built/main.min.js"}}'></script>
+<script>
+    (function () {
+        const hero = document.querySelector(".home-cinema-hero");
+        if (!hero) return;
+
+        const track = hero.querySelector(".home-cinema-track");
+        const slides = Array.from(hero.querySelectorAll(".home-cinema-slide"));
+        const dotsWrap = hero.querySelector(".home-cinema-dots");
+        const prevBtn = hero.querySelector(".home-cinema-btn.prev");
+        const nextBtn = hero.querySelector(".home-cinema-btn.next");
+        let current = 0;
+        let timer;
+
+        slides.forEach((_, idx) => {
+            const dot = document.createElement("button");
+            dot.className = "home-cinema-dot" + (idx === 0 ? " active" : "");
+            dot.type = "button";
+            dot.setAttribute("aria-label", "Go to slide " + (idx + 1));
+            dot.addEventListener("click", function () {
+                current = idx;
+                render();
+                restart();
+            });
+            dotsWrap.appendChild(dot);
+        });
+
+        function render() {
+            track.style.transform = "translateX(-" + current * 100 + "%)";
+            const dots = hero.querySelectorAll(".home-cinema-dot");
+            dots.forEach((dot, idx) => dot.classList.toggle("active", idx === current));
+        }
+
+        function next() {
+            current = (current + 1) % slides.length;
+            render();
+        }
+
+        function prev() {
+            current = (current - 1 + slides.length) % slides.length;
+            render();
+        }
+
+        function restart() {
+            clearInterval(timer);
+            timer = setInterval(next, 4200);
+        }
+
+        nextBtn.addEventListener("click", function () { next(); restart(); });
+        prevBtn.addEventListener("click", function () { prev(); restart(); });
+
+        restart();
+        render();
+    })();
+</script>
+
+{{ghost_foot}}
+
+</body>
+</html>
