@@ -40,6 +40,7 @@ services:
       - "${GHOST_PORT}:2368"
     volumes:
       - ghost_content:/var/lib/ghost/content
+      - ./theme-overrides:/var/lib/ghost/content/themes
 
 volumes:
   ghost_db_data:
