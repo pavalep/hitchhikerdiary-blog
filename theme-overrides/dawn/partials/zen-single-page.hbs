@@ -49,19 +49,34 @@
         {{#get "posts" filter="type:post+status:published" limit="12" as |entries|}}
             <div class="zen-post-list">
                 {{#foreach entries}}
-                    <article class="zen-post-item">
+                    <article class="zen-post-item" aria-label="Post: {{title}}">
                         {{#if feature_image}}
                             <a class="zen-post-image-wrap" href="{{url}}" aria-label="{{title}}">
                                 <img class="zen-post-image" src="{{img_url feature_image size="l"}}" alt="{{title}}">
                             </a>
                         {{/if}}
+
                         <h3><a href="{{url}}">{{title}}</a></h3>
+
+                        <div class="zen-post-meta" aria-hidden="false">
+                            {{#if primary_author}}<span class="meta-author">{{primary_author.name}}</span>{{/if}}
+                            <span class="meta-sep"> &middot; </span>
+                            <time datetime="{{published_at}}">{{date published_at format="MMMM D, YYYY"}}</time>
+                            <span class="meta-sep"> &middot; </span>
+                            <span class="meta-reading">{{reading_time}} min read</span>
+                        </div>
+
                         {{#if custom_excerpt}}
                             <p>{{custom_excerpt}}</p>
-                        {{else if plaintext}}
+                        {{else}}
                             <p>{{plaintext words="32"}}</p>
                         {{/if}}
-                        <p class="zen-hashtags">#journal #cinemanotes #longread</p>
+
+                        <p class="zen-hashtags">
+                            {{#foreach tags limit="3"}}
+                                <a href="{{url}}" aria-label="Tag: {{name}}">#{{name}}</a>
+                            {{/foreach}}
+                        </p>
                     </article>
                 {{/foreach}}
             </div>

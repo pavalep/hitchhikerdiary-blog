@@ -5,8 +5,19 @@
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <title>{{meta_title page=(t " (Page %)")}}</title>
+    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@600;700;900&family=Inter:wght@300;400;600;700&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="{{asset "built/screen.css"}}">
     <style>
+        :root{
+            /* premium minimal palette */
+            --bg: #FBFBFA; /* very light ivory */
+            --card: #FFFFFF;
+            --text: #0B0C0D; /* deep near-black */
+            --muted: #6B7280; /* subtle slate */
+            --accent: #8B5E3C; /* warm film brown accent */
+            --soft-border: rgba(11,12,13,0.06);
+        }
+
         body,
         .site,
         .site-content,
@@ -14,29 +25,47 @@
         .gh-feed,
         .featured-wrapper,
         .gh-foot {
-            background: #ffffff;
+            background: var(--bg);
+            color: var(--text);
+            font-family: 'Inter', system-ui, -apple-system, "Segoe UI", Roboto, "Helvetica Neue", Arial;
+            -webkit-font-smoothing:antialiased;
+            -moz-osx-font-smoothing:grayscale;
+            line-height: 1.7;
+            font-weight: 400;
         }
 
+        /* Headings use an elegant serif for a cinematic voice */
+        .gh-head-logo,
+        .zen-title,
+        .home-cinema-title,
+        .zen-post-item h3 a {
+            font-family: 'Playfair Display', Georgia, 'Times New Roman', serif;
+            color: var(--text);
+            font-weight: 700;
+            letter-spacing: -0.01em;
+        }
+
+        /* Minimal header */
+        .gh-head {
+            background: transparent !important;
+            border-bottom: 1px solid var(--soft-border);
+        }
+
+        /* Hero adjustments: stronger, cinematic but minimal */
         .home-cinema-hero {
             position: relative;
             width: 100vw;
-            margin: 0 calc(50% - 50vw) 42px;
+            margin: 0 calc(50% - 50vw) 54px;
             overflow: hidden;
             border-radius: 0;
             border: 0;
-            box-shadow: none;
-            background: #fff;
-        }
-
-        .home-cinema-track {
-            display: flex;
-            transition: transform 0.7s ease;
+            background: transparent;
         }
 
         .home-cinema-slide {
             min-width: 100%;
             position: relative;
-            aspect-ratio: 21 / 8;
+            aspect-ratio: 21 / 9; /* wider, cinematic crop */
             overflow: hidden;
         }
 
@@ -44,243 +73,61 @@
             width: 100%;
             height: 100%;
             object-fit: cover;
-            filter: grayscale(95%) contrast(106%);
+            filter: grayscale(78%) contrast(105%) brightness(0.98);
+            transform-origin: center;
+            transition: transform 12s ease;
         }
+
+        .home-cinema-slide:hover img { transform: scale(1.03); }
 
         .home-cinema-overlay {
             position: absolute;
             left: 0;
             right: 0;
             bottom: 0;
-            padding: 26px 30px;
-            background: linear-gradient(to top, rgba(0, 0, 0, 0.62), rgba(0, 0, 0, 0.08));
+            padding: 36px 48px;
+            background: linear-gradient(to top, rgba(3,3,3,0.82), rgba(3,3,3,0.08));
             color: #fff;
         }
 
-        .home-cinema-kicker {
-            letter-spacing: 0.12em;
-            text-transform: uppercase;
-            font-size: 1.1rem;
-            margin-bottom: 6px;
-        }
+        .home-cinema-kicker { font-size: 0.93rem; color: rgba(255,255,255,0.9); font-weight:600; }
+        .home-cinema-title { margin: 0; font-size: clamp(2.2rem, 4.2vw, 4.6rem); line-height: 1.02; }
 
-        .home-cinema-title {
-            margin: 0;
-            font-size: clamp(2rem, 3.6vw, 4rem);
-            line-height: 1.05;
-            font-weight: 700;
-        }
+        /* Links reduced to understated text links */
+        .home-cinema-links { display:flex; gap:12px; padding:12px 18px; background:transparent; border-top:0; }
+        .home-cinema-link { color: rgba(255,255,255,0.92); text-decoration: none; font-weight:600; font-size:0.98rem; background:transparent; border-radius:0; border:0; }
+        .home-cinema-link:hover { text-decoration:underline; }
 
-        .home-cinema-links {
-            display: flex;
-            flex-wrap: wrap;
-            gap: 10px;
-            padding: 16px 18px;
-            border-top: 1px solid #efeff3;
-            background: #fff;
-        }
+        .home-cinema-controls .home-cinema-btn{ width:42px; height:42px; border-radius:6px; background: rgba(255,255,255,0.94); color: var(--text); font-size:1.15rem; }
+        .home-cinema-dots .home-cinema-dot{ width:8px; height:8px; background: rgba(255,255,255,0.45); }
 
-        .home-cinema-link {
-            display: inline-flex;
-            align-items: center;
-            padding: 8px 13px;
-            border: 1px solid #dadce3;
-            border-radius: 999px;
-            color: #121318;
-            text-decoration: none;
-            font-size: 1.25rem;
-            font-weight: 700;
-        }
+        /* Page layout and spacing */
+        .zen-page { width: min(980px, calc(100% - 48px)); margin: 0 auto 72px; }
+        .zen-intro, .zen-topic { padding: 36px 0; border-bottom: 1px solid var(--soft-border); }
 
-        .home-cinema-link:hover {
-            border-color: #111;
-            transform: translateY(-1px);
-        }
+        .zen-kicker { color: var(--muted); font-weight:700; letter-spacing:0.12em; text-transform:uppercase; }
+        .zen-title { margin: 0 0 18px; font-size: clamp(2.4rem, 5vw, 4.2rem); }
+        .zen-page p { margin: 0 0 16px; color: rgba(11,12,13,0.92); font-size:1.06rem; }
 
-        .home-cinema-controls {
-            position: absolute;
-            top: 18px;
-            right: 18px;
-            display: flex;
-            gap: 8px;
-            z-index: 4;
-        }
+        /* Post list: minimal cards with generous spacing */
+        .zen-post-list { display: grid; gap: 20px; margin-top: 22px; }
+        .zen-post-item { background: var(--card); border: 1px solid var(--soft-border); border-radius: 6px; padding: 20px; box-shadow: none; }
 
-        .home-cinema-btn {
-            width: 38px;
-            height: 38px;
-            border-radius: 999px;
-            border: 0;
-            background: rgba(255, 255, 255, 0.86);
-            color: #141418;
-            font-size: 2rem;
-            line-height: 1;
-            cursor: pointer;
-        }
+        .zen-post-image-wrap { margin: -20px -20px 16px; border-radius: 6px 6px 0 0; overflow:hidden; background: #f8f8f8; aspect-ratio: 3 / 2; }
+        .zen-post-image { width:100%; height:100%; object-fit:cover; filter: grayscale(28%) contrast(102%); transition: transform 8s ease; }
+        .zen-post-image-wrap:hover .zen-post-image{ transform: scale(1.02); }
 
-        .home-cinema-dots {
-            position: absolute;
-            bottom: 18px;
-            right: 20px;
-            display: flex;
-            gap: 6px;
-            z-index: 4;
-        }
+        .zen-post-item h3 { margin: 0 0 8px; font-size: clamp(1.4rem, 2.6vw, 1.95rem); }
+        .zen-post-item h3 a { color: var(--text); text-decoration:none; font-weight:700; }
 
-        .home-cinema-dot {
-            width: 7px;
-            height: 7px;
-            border-radius: 999px;
-            background: rgba(255, 255, 255, 0.45);
-            border: 0;
-            padding: 0;
-        }
+        .zen-post-meta{ font-size:0.95rem; color:var(--muted); margin-bottom:12px; display:flex; gap:8px; align-items:center; }
+        .zen-hashtags a{ color:var(--accent); text-decoration:none; margin-right:10px; font-weight:600; }
 
-        .home-cinema-dot.active {
-            background: #ffffff;
-        }
-
-        .zen-page {
-            width: min(920px, calc(100% - 30px));
-            margin: 0 auto 64px;
-            color: #111319;
-        }
-
-        .gh-head {
-            background: #ffffff !important;
-            border-bottom: 1px solid #eceef3;
-        }
-
-        .gh-head-inner {
-            padding-top: 12px;
-            padding-bottom: 12px;
-            background: #ffffff;
-        }
-
-        .gh-head-logo {
-            font-size: 2.4rem;
-            line-height: 1.1;
-        }
-
-        .gh-head-subtitle {
-            margin-top: 5px;
-            font-size: 1.25rem;
-            color: #707581;
-            letter-spacing: 0.02em;
-            line-height: 1.4;
-        }
-
-        .zen-intro,
-        .zen-topic {
-            border-bottom: 1px solid #efeff3;
-            padding: 30px 0;
-            background: #ffffff;
-        }
-
-        .zen-kicker {
-            margin: 0 0 10px;
-            font-size: 1rem;
-            letter-spacing: 0.12em;
-            text-transform: uppercase;
-            color: #666b75;
-            font-weight: 700;
-        }
-
-        .zen-title {
-            margin: 0 0 14px;
-            font-size: clamp(2.2rem, 4.3vw, 3.8rem);
-            line-height: 1.08;
-        }
-
-        .zen-topic h2 {
-            margin: 0 0 10px;
-            font-size: clamp(1.8rem, 3.4vw, 2.6rem);
-            line-height: 1.18;
-        }
-
-        .zen-page p {
-            margin: 0 0 13px;
-            font-size: clamp(1.05rem, 1.26vw, 1.22rem);
-            line-height: 1.82;
-            color: #1d212a;
-        }
-
-        .zen-hashtags {
-            font-size: 1rem;
-            color: #646a74;
-            letter-spacing: 0.03em;
-            margin-top: 4px;
-        }
-
-        .zen-post-list {
-            display: grid;
-            gap: 18px;
-            margin-top: 18px;
-        }
-
-        .zen-post-item {
-            border: 1px solid #ebedf2;
-            border-radius: 10px;
-            padding: 18px;
-            background: #ffffff;
-        }
-
-        .zen-post-image-wrap {
-            margin: -18px -18px 14px;
-            border-radius: 10px 10px 0 0;
-            overflow: hidden;
-            border-bottom: 1px solid #ebedf2;
-            background: #f5f6f8;
-            aspect-ratio: 21 / 9;
-        }
-
-        .zen-post-image {
-            width: 100%;
-            height: 100%;
-            object-fit: cover;
-        }
-
-        .zen-post-item h3 {
-            margin: 0 0 8px;
-            font-size: clamp(1.35rem, 2.4vw, 1.75rem);
-            line-height: 1.2;
-        }
-
-        .zen-post-item h3 a {
-            color: #13151c;
-            text-decoration: none;
-        }
-
-        .zen-post-item h3 a:hover {
-            text-decoration: underline;
-        }
-
-        @media (max-width: 900px) {
-            .home-cinema-hero {
-                width: 100vw;
-                margin: 0 calc(50% - 50vw) 22px;
-                border-radius: 0;
-            }
-
-            .home-cinema-slide {
-                aspect-ratio: 16 / 10;
-            }
-
-            .home-cinema-overlay {
-                padding: 18px;
-            }
-
-            .home-cinema-title {
-                font-size: clamp(1.6rem, 8.5vw, 2.7rem);
-            }
-
-            .gh-head-logo {
-                font-size: 2rem;
-            }
-
-            .gh-head-subtitle {
-                font-size: 1.1rem;
-            }
+        @media (max-width:900px){
+            .home-cinema-overlay{ padding:18px; }
+            .home-cinema-title{ font-size: clamp(1.6rem, 8.5vw, 2.8rem); }
+            .zen-page{ width: calc(100% - 30px); margin-bottom:40px; }
+            .zen-post-image-wrap{ aspect-ratio: 16 / 9; }
         }
     </style>
 

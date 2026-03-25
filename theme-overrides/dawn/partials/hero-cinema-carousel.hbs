@@ -1,11 +1,11 @@
-<section class="home-cinema-hero" aria-label="Cinematic highlights">
+<section class="home-cinema-hero" aria-label="Cinematic highlights" role="region">
     <div class="home-cinema-controls">
-        <button class="home-cinema-btn prev" type="button" aria-label="Previous slide">&#8249;</button>
-        <button class="home-cinema-btn next" type="button" aria-label="Next slide">&#8250;</button>
+        <button class="home-cinema-btn prev" type="button" aria-label="Previous slide" aria-controls="home-cinema-track">&#8249;</button>
+        <button class="home-cinema-btn next" type="button" aria-label="Next slide" aria-controls="home-cinema-track">&#8250;</button>
     </div>
 
-    <div class="home-cinema-track">
-        <article class="home-cinema-slide">
+    <div class="home-cinema-track" id="home-cinema-track" role="list">
+        <article class="home-cinema-slide" role="listitem">
             <img src="https://images.pexels.com/photos/169677/pexels-photo-169677.jpeg" alt="Monochrome street frame">
             <div class="home-cinema-overlay">
                 <div class="home-cinema-kicker">Hitchhiker Diary</div>
@@ -13,7 +13,7 @@
             </div>
         </article>
 
-        <article class="home-cinema-slide">
+        <article class="home-cinema-slide" role="listitem">
             <img src="https://images.pexels.com/photos/1008155/pexels-photo-1008155.jpeg" alt="Train platform mood">
             <div class="home-cinema-overlay">
                 <div class="home-cinema-kicker">Field Notes</div>
@@ -21,7 +21,7 @@
             </div>
         </article>
 
-        <article class="home-cinema-slide">
+        <article class="home-cinema-slide" role="listitem">
             <img src="https://images.pexels.com/photos/2387873/pexels-photo-2387873.jpeg" alt="Black and white city mood">
             <div class="home-cinema-overlay">
                 <div class="home-cinema-kicker">Visual Journal</div>
@@ -29,7 +29,7 @@
             </div>
         </article>
 
-        <article class="home-cinema-slide">
+        <article class="home-cinema-slide" role="listitem">
             <img src="https://images.pexels.com/photos/1181677/pexels-photo-1181677.jpeg" alt="Portrait close up mood">
             <div class="home-cinema-overlay">
                 <div class="home-cinema-kicker">Photo Essay</div>
@@ -37,7 +37,7 @@
             </div>
         </article>
 
-        <article class="home-cinema-slide">
+        <article class="home-cinema-slide" role="listitem">
             <img src="https://images.pexels.com/photos/8106774/pexels-photo-8106774.jpeg" alt="Cinema projector mood">
             <div class="home-cinema-overlay">
                 <div class="home-cinema-kicker">Director Notes</div>
@@ -45,7 +45,7 @@
             </div>
         </article>
 
-        <article class="home-cinema-slide">
+        <article class="home-cinema-slide" role="listitem">
             <img src="https://images.pexels.com/photos/1842608/pexels-photo-1842608.jpeg" alt="Walking street frame">
             <div class="home-cinema-overlay">
                 <div class="home-cinema-kicker">Travel</div>
@@ -53,7 +53,7 @@
             </div>
         </article>
 
-        <article class="home-cinema-slide">
+        <article class="home-cinema-slide" role="listitem">
             <img src="https://images.pexels.com/photos/3889987/pexels-photo-3889987.jpeg" alt="Crowd and movement mood">
             <div class="home-cinema-overlay">
                 <div class="home-cinema-kicker">People & Politics</div>
@@ -61,7 +61,7 @@
             </div>
         </article>
 
-        <article class="home-cinema-slide">
+        <article class="home-cinema-slide" role="listitem">
             <img src="https://images.pexels.com/photos/699466/pexels-photo-699466.jpeg" alt="Old city architecture mood">
             <div class="home-cinema-overlay">
                 <div class="home-cinema-kicker">Urban Memory</div>
@@ -69,7 +69,7 @@
             </div>
         </article>
 
-        <article class="home-cinema-slide">
+        <article class="home-cinema-slide" role="listitem">
             <img src="https://images.pexels.com/photos/91227/pexels-photo-91227.jpeg" alt="Clouded highway image">
             <div class="home-cinema-overlay">
                 <div class="home-cinema-kicker">Journey</div>
@@ -77,7 +77,7 @@
             </div>
         </article>
 
-        <article class="home-cinema-slide">
+        <article class="home-cinema-slide" role="listitem">
             <img src="https://images.pexels.com/photos/210307/pexels-photo-210307.jpeg" alt="Rain and city frame">
             <div class="home-cinema-overlay">
                 <div class="home-cinema-kicker">Final Cut</div>
