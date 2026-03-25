@@ -64,7 +64,20 @@ Testing / QA checklist
 - [ ] Mobile responsive: hero, cards and typography scale correctly
 
 Progress log (add entries below)
-- [ ] 2026-03-25 — Document created (by script)
+- [x] 2026-03-25 — Document created (by script)
+- [x] 2026-03-25 — Added premium fonts (Playfair Display, Inter) and cinematic color palette
+- [x] 2026-03-25 — Added post metadata (date, author, reading time, tags) to homepage cards
+- [x] 2026-03-25 — Ensured excerpts use custom_excerpt or plaintext fallback (32 words max)
+- [x] 2026-03-25 — Updated hero carousel with accessibility improvements and minimal links
+- [x] 2026-03-25 — Fixed Docker configuration to mount theme files properly
+- [x] 2026-03-25 — Created missing partials (icons/search, pswp) to resolve 400 errors
+- [x] 2026-03-25 — Deployed changes to production via Git push
+- [x] 2026-03-25 — **DEPRECATED Ghost frontend** - replaced with Next.js headless setup
+- [x] 2026-03-25 — Created Next.js frontend with Ghost Content API integration
+- [x] 2026-03-25 — Built cinematic Hero component with carousel functionality
+- [x] 2026-03-25 — Created PostList component with metadata and tags
+- [x] 2026-03-25 — Added responsive header and footer with navigation
+- [x] 2026-03-25 — Configured Docker setup for Next.js + Ghost backend
 
 Practical notes for commits
 - Commit names: `feat(theme): add post metadata to home cards`, `style(theme): cinematic palette and typography`, `fix(theme): use excerpts on homepage`

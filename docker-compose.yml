@@ -42,6 +42,21 @@ services:
       - ghost_content:/var/lib/ghost/content
       - ./theme-overrides:/var/lib/ghost/content/themes
 
+  frontend:
+    build:
+      context: ./frontend
+      dockerfile: Dockerfile
+    container_name: hitchhikerdiary-frontend
+    restart: unless-stopped
+    environment:
+      - GHOST_URL=${GHOST_URL}
+      - GHOST_CONTENT_API_KEY=${GHOST_CONTENT_API_KEY}
+      - NEXT_PUBLIC_SITE_URL=${FRONTEND_URL}
+    ports:
+      - "${FRONTEND_PORT:-3000}:3000"
+    depends_on:
+      - ghost
+
 volumes:
   ghost_db_data:
   ghost_content:
