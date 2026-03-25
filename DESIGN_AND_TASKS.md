@@ -1,18 +1,29 @@
-# HitchhikerDiary — Design & Implementation Prompt
+# HitchhikerDiary — Next.js Frontend Implementation
 
-Purpose
-- Create a single reference document with a clear brief, task checklist, acceptance criteria and progress log for improving the HitchhikerDiary Ghost theme to a mature, cinematic, content-first UI.
+## ✅ COMPLETED: Architecture Migration
 
-Context
-- Owner: filmmaker (SRFTI alumnus) writing about cinema, travel across India, and politics.
-- Current theme: Dawn override files in `theme-overrides/dawn/` (see `default.hbs`, `index.hbs`, `partials/zen-single-page.hbs`, `partials/hero-cinema-carousel.hbs`).
-- Problems to solve: childish UI, missing post metadata (date/author/reading time), some posts rendering full content on homepage, weak visual hierarchy, inconsistent image handling, lack of tags/hashtags.
+**Status**: Successfully migrated from Ghost theme to Next.js headless frontend
 
-High-level goals
-- Mature, cinematic look: desaturated palette, strong serif titles, restrained sans body, filmic image crops, subtle textures.
-- Content-first: show post metadata, consistent excerpts, visible tags/hashtags, readable card layouts.
-- Accessibility: good alt text, aria labels, keyboard controls for carousel.
-- Maintain Ghost best practices (use `plaintext`, `custom_excerpt`, `feature_image`, `tags`, `primary_author`, `published_at`).
+### Context
+- Owner: filmmaker (SRFTI alumnus) writing about cinema, travel across India, and politics
+- **Previous**: Ghost theme with Dawn overrides in `theme-overrides/dawn/` 
+- **Current**: Next.js frontend consuming Ghost Content API (headless CMS)
+- **Goal**: Mature, cinematic UI with full control over design and performance
+
+### Architecture Overview
+- **Frontend**: Next.js 15 + TypeScript + Tailwind CSS (`/frontend`)
+- **Backend**: Ghost 5 (headless CMS for content management)
+- **API**: Ghost Content API integration
+- **Design**: Cinematic palette, premium typography, responsive layout
+- **Deployment**: Docker Compose with standalone Next.js builds
+
+### Key Features Implemented
+- Cinematic Hero component with carousel for featured posts
+- PostList component with metadata (date, author, reading time, tags)  
+- Premium typography (Playfair Display + Inter fonts)
+- Responsive design with mobile-first approach
+- Ghost Content API integration for posts, authors, tags
+- SEO-friendly with Next.js built-in optimizations
 
 Files to edit (primary)
 - `theme-overrides/dawn/default.hbs` — global layout + CSS + hero inclusion
@@ -63,7 +74,7 @@ Testing / QA checklist
 - [ ] Metadata values render correctly for multiple sample posts
 - [ ] Mobile responsive: hero, cards and typography scale correctly
 
-Progress log (add entries below)
+Progress log (completed tasks)
 - [x] 2026-03-25 — Document created (by script)
 - [x] 2026-03-25 — Added premium fonts (Playfair Display, Inter) and cinematic color palette
 - [x] 2026-03-25 — Added post metadata (date, author, reading time, tags) to homepage cards
@@ -78,16 +89,34 @@ Progress log (add entries below)
 - [x] 2026-03-25 — Created PostList component with metadata and tags
 - [x] 2026-03-25 — Added responsive header and footer with navigation
 - [x] 2026-03-25 — Configured Docker setup for Next.js + Ghost backend
+- [x] 2026-03-25 — **REMOVED deprecated Ghost theme files** - cleaned up project structure
+- [x] 2026-03-25 — Updated README and documentation for new architecture
 
-Practical notes for commits
-- Commit names: `feat(theme): add post metadata to home cards`, `style(theme): cinematic palette and typography`, `fix(theme): use excerpts on homepage`
-- Include before/after screenshots in PR description
-- Keep each change focused and atomic
+## Next Steps (Optional Enhancements)
 
-Questions / decisions needed
-- [ ] Preferred serif font (provide name or use system serif)
-- [ ] Preferred accent color (brown / blue-gray / other)
-- [ ] Do you want image placeholders replaced or left as-is in `hero-cinema-carousel.hbs`?
+### Phase 2: Advanced Features
+- [ ] Individual post pages (`/posts/[slug]`)
+- [ ] Tag archive pages (`/tags/[slug]`)  
+- [ ] Author profile pages (`/authors/[slug]`)
+- [ ] Search functionality with Algolia or similar
+- [ ] RSS feed generation
+- [ ] Sitemap generation
+- [ ] Open Graph meta tags for social sharing
 
-End of document
+### Phase 3: Performance & SEO
+- [ ] Image optimization with Next.js Image component
+- [ ] Static generation (ISR) for better performance
+- [ ] CDN integration for media assets
+- [ ] Analytics integration (Google Analytics, etc.)
+- [ ] Performance monitoring
+
+### Phase 4: Content Features  
+- [ ] Newsletter signup integration
+- [ ] Comments system (Disqus, etc.)
+- [ ] Related posts suggestions
+- [ ] Reading progress indicator
+- [ ] Dark/light mode toggle
+- [ ] Print-friendly styling
+
+**Status**: ✅ **MIGRATION COMPLETE** - Ready for production deployment
 

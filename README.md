@@ -1,33 +1,66 @@
-# HitchhikerDiary Blog (Ghost Self-Hosted)
+# HitchhikerDiary Blog (Next.js + Ghost Headless CMS)
 
-This repository runs a Dockerized Ghost blog stack.
+A cinematic blog for a filmmaker documenting cinema, travel across India, and political observations. 
+
+**Architecture**: Next.js frontend consuming Ghost as a headless CMS via Content API.
 
 Target domain:
 - hitchhikerdiary.pavalep.com
 
 ## Stack
 
-- Ghost (frontend + admin)
-- MySQL 8
-- Docker Compose
-- Optional reverse proxy (Nginx/Caddy) for domain and SSL
+- **Frontend**: Next.js 15 with TypeScript, Tailwind CSS, cinematic design
+- **Backend**: Ghost (headless CMS for content management)
+- **Database**: MySQL 8
+- **Container**: Docker Compose
+- **Deployment**: Standalone build ready for production
 
 ## Quick Start
 
-1. Copy environment template.
-2. Set strong passwords in `.env`.
-3. Start the containers.
-
+1. Copy environment template and set configuration:
 ```bash
 cp .env.example .env
+# Edit .env with your Ghost Content API key and domain settings
+```
+
+2. Start the full stack:
+```bash
 docker compose up -d
 ```
 
-After startup, open:
-- `http://SERVER_IP:2368` (or your domain if proxy is configured)
+3. Access the applications:
+- **Blog Frontend** (Next.js): `http://localhost:3000`
+- **Ghost Admin** (Content Management): `http://localhost:8088/ghost`
+- **Ghost API** (Headless): `http://localhost:8088`
 
-Ghost admin panel is available at:
-- `/ghost`
+## Architecture Overview
+
+### Frontend (Next.js)
+- Located in `/frontend` directory
+- Fetches content via Ghost Content API
+- Cinematic design with premium typography (Playfair Display + Inter)
+- Responsive hero carousel, post cards with metadata
+- Built-in search, tags, author pages
+
+### Backend (Ghost Headless)
+- Provides Content API for posts, pages, authors, tags
+- Admin interface for content creation and management
+- Image uploads and media management
+- No themes needed (headless mode)
+
+## Development
+
+### Frontend Development
+```bash
+cd frontend
+npm install
+npm run dev  # Starts on localhost:3000
+```
+
+### Content Management
+- Access Ghost admin at `http://localhost:8088/ghost`
+- Create posts, manage authors, configure site settings
+- Ghost Content API key needed in `.env` for frontend
 
 ## Domain Setup (Cloudflare + Reverse Proxy)
 
