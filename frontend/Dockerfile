@@ -1,5 +1,5 @@
-# Use Node.js 18 Alpine as the base image
-FROM node:18-alpine AS base
+# Use Node.js 22 Alpine as the base image (required for Next.js 16)
+FROM node:22-alpine AS base
 
 # Install dependencies only when needed
 FROM base AS deps

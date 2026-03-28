@@ -33,7 +33,7 @@ export default function Hero({ featuredPosts }: HeroProps) {
 
   if (featuredPosts.length === 0) {
     return (
-      <section className="relative h-[60vh] bg-gray-900 flex items-center justify-center">
+      <section className="relative h-[60vh] bg-[#2b211b] flex items-center justify-center">
         <h1 className="text-4xl md:text-6xl font-serif text-white text-center">
           Hitchhiker Diary
         </h1>
@@ -42,7 +42,7 @@ export default function Hero({ featuredPosts }: HeroProps) {
   }
 
   return (
-    <section className="relative h-[70vh] overflow-hidden">
+    <section className="relative h-[74vh] min-h-[560px] overflow-hidden story-reveal">
       <div 
         className="flex transition-transform duration-700 ease-in-out h-full"
         style={{ transform: `translateX(-${currentSlide * 100}%)` }}
@@ -55,30 +55,35 @@ export default function Hero({ featuredPosts }: HeroProps) {
                 alt={post.title}
                 fill
                 className="object-cover"
-                style={{ filter: 'grayscale(78%) contrast(105%) brightness(0.98)' }}
+                style={{ filter: 'grayscale(36%) contrast(108%) brightness(0.82)' }}
                 priority={index === 0}
               />
             )}
-            <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/20 to-black/10" />
-            <div className="absolute bottom-0 left-0 right-0 p-8 md:p-12">
+            <div className="absolute inset-0 bg-gradient-to-t from-black/90 via-black/30 to-black/20" />
+            <div className="absolute inset-0 bg-[radial-gradient(circle_at_15%_20%,rgba(255,195,170,0.28)_0%,transparent_42%)]" />
+            <div className="absolute bottom-0 left-0 right-0 p-7 md:p-12">
               <div className="max-w-6xl mx-auto">
-                <p className="text-white/90 text-sm md:text-base font-semibold uppercase tracking-wide mb-3">
+                <p className="mb-4 text-white/70 text-[11px] md:text-xs uppercase tracking-[0.22em]">Hitchhiker Diary</p>
+                <p className="inline-flex rounded-full border border-white/40 bg-white/10 px-3 py-1 text-white/95 text-xs md:text-sm font-semibold uppercase tracking-[0.16em] mb-4 backdrop-blur-md">
                   {post.primary_tag?.name || 'Journal'}
                 </p>
-                <h1 className="text-3xl md:text-5xl lg:text-6xl font-serif text-white mb-4 leading-tight">
+                <h1 className="text-3xl md:text-5xl lg:text-6xl font-serif text-white mb-4 leading-tight max-w-4xl">
                   {post.title}
                 </h1>
                 {post.excerpt && (
-                  <p className="text-white/80 text-lg md:text-xl max-w-3xl mb-6 leading-relaxed">
+                  <p className="text-white/85 text-base md:text-xl max-w-3xl mb-7 leading-relaxed">
                     {post.excerpt}
                   </p>
                 )}
-                <Link 
-                  href={`/posts/${post.slug}`}
-                  className="inline-flex items-center px-6 py-3 bg-white/10 backdrop-blur-sm border border-white/20 text-white hover:bg-white/20 transition-colors duration-300 rounded-md"
-                >
-                  Read Story
-                </Link>
+                <div className="flex items-center gap-3">
+                  <Link 
+                    href={`/posts/${post.slug}`}
+                    className="inline-flex items-center px-6 py-3 bg-[color:var(--page-accent)] border border-[color:var(--page-accent)] text-white hover:opacity-90 transition-opacity duration-300 rounded-full font-semibold"
+                  >
+                    Read Story
+                  </Link>
+                  <span className="text-white/80 text-sm md:text-base">Slide {index + 1} of {featuredPosts.length}</span>
+                </div>
               </div>
             </div>
           </div>
@@ -86,17 +91,17 @@ export default function Hero({ featuredPosts }: HeroProps) {
       </div>
 
       {/* Controls */}
-      <div className="absolute top-4 right-4 flex gap-2">
+      <div className="absolute top-5 right-5 flex gap-2">
         <button
           onClick={prevSlide}
-          className="p-2 bg-white/20 backdrop-blur-sm border border-white/30 text-white hover:bg-white/30 transition-colors duration-300 rounded-md"
+          className="p-2.5 bg-black/30 backdrop-blur-sm border border-white/30 text-white hover:bg-black/40 transition-colors duration-300 rounded-full"
           aria-label="Previous slide"
         >
           <ChevronLeft size={20} />
         </button>
         <button
           onClick={nextSlide}
-          className="p-2 bg-white/20 backdrop-blur-sm border border-white/30 text-white hover:bg-white/30 transition-colors duration-300 rounded-md"
+          className="p-2.5 bg-black/30 backdrop-blur-sm border border-white/30 text-white hover:bg-black/40 transition-colors duration-300 rounded-full"
           aria-label="Next slide"
         >
           <ChevronRight size={20} />
@@ -104,17 +109,24 @@ export default function Hero({ featuredPosts }: HeroProps) {
       </div>
 
       {/* Dots */}
-      <div className="absolute bottom-4 right-4 flex gap-2">
+      <div className="absolute bottom-5 right-5 flex gap-2 rounded-full border border-white/30 bg-black/30 px-3 py-2 backdrop-blur-md">
         {featuredPosts.map((_, index) => (
           <button
             key={index}
             onClick={() => setCurrentSlide(index)}
-            className={`w-2 h-2 rounded-full transition-colors duration-300 ${
-              index === currentSlide ? 'bg-white' : 'bg-white/50'
+            className={`h-2 rounded-full transition-all duration-300 ${
+              index === currentSlide ? 'w-8 bg-white' : 'w-2 bg-white/50 hover:bg-white/80'
             }`}
             aria-label={`Go to slide ${index + 1}`}
           />
         ))}
+      </div>
+
+      <div className="absolute bottom-6 left-6 right-28 h-1 rounded-full bg-white/25 overflow-hidden">
+        <div
+          className="h-full rounded-full bg-white transition-all duration-500"
+          style={{ width: `${((currentSlide + 1) / featuredPosts.length) * 100}%` }}
+        />
       </div>
     </section>
   );

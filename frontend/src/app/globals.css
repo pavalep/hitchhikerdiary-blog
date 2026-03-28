@@ -1,23 +1,81 @@
-@import url('https://fonts.googleapis.com/css2?family=Playfair+Display:wght@600;700;900&family=Inter:wght@300;400;600;700&display=swap');
-@tailwind base;
-@tailwind components;
-@tailwind utilities;
+@import url('https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:wght@400;500;600;700;800&family=Literata:opsz,wght@7..72,500;7..72,700;7..72,800&display=swap');
+@import 'tailwindcss';
 
 @layer base {
+  :root {
+    --page-bg: #f6f1e8;
+    --page-surface: #fffdf9;
+    --page-ink: #141312;
+    --page-muted: #615b52;
+    --page-accent: #b9572f;
+    --page-accent-soft: #f0cfbe;
+    --page-border: rgba(20, 19, 18, 0.1);
+  }
+
   html {
-    font-family: 'Inter', system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+    font-family: 'Bricolage Grotesque', system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
   }
   
   body {
-    background-color: #FBFBFA;
-    color: #0B0C0D;
+    background:
+      radial-gradient(1200px 600px at 15% -20%, #eec9b6 0%, transparent 60%),
+      radial-gradient(800px 500px at 90% 0%, #f3e3ba 0%, transparent 55%),
+      var(--page-bg);
+    color: var(--page-ink);
     -webkit-font-smoothing: antialiased;
     -moz-osx-font-smoothing: grayscale;
+    min-height: 100vh;
   }
   
   h1, h2, h3, h4, h5, h6 {
-    font-family: 'Playfair Display', Georgia, 'Times New Roman', serif;
-    font-weight: 700;
+    font-family: 'Literata', Georgia, 'Times New Roman', serif;
+    font-weight: 800;
     letter-spacing: -0.01em;
+  }
+}
+
+@layer utilities {
+  .ink-ring {
+    box-shadow: 0 0 0 1px var(--page-border), 0 10px 35px rgba(20, 19, 18, 0.07);
+  }
+
+  .paper-card {
+    background: color-mix(in srgb, var(--page-surface) 92%, white 8%);
+    border: 1px solid var(--page-border);
+  }
+
+  .story-reveal {
+    animation: story-reveal 600ms ease-out both;
+  }
+
+  .paper-noise {
+    position: relative;
+  }
+
+  .paper-noise::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    pointer-events: none;
+    opacity: 0.08;
+    background-image: radial-gradient(#1f1a16 0.6px, transparent 0.6px);
+    background-size: 3px 3px;
+  }
+
+  .editorial-panel {
+    background: linear-gradient(140deg, rgba(255, 253, 249, 0.95), rgba(251, 244, 233, 0.88));
+    border: 1px solid var(--page-border);
+    box-shadow: 0 20px 60px rgba(20, 19, 18, 0.08);
+  }
+}
+
+@keyframes story-reveal {
+  from {
+    opacity: 0;
+    transform: translateY(16px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
   }
 }

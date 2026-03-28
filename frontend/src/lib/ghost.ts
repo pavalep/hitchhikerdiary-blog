@@ -1,11 +1,24 @@
 import GhostContentAPI from '@tryghost/content-api';
 
+const defaultGhostUrl = process.env.NODE_ENV === 'production'
+  ? 'http://ghost:2368'
+  : 'https://hitchhikerdiary.pavalep.com';
+
+const ghostUrl = process.env.GHOST_API_URL || process.env.GHOST_URL || defaultGhostUrl;
+const ghostKey = process.env.GHOST_CONTENT_API_KEY;
+
 // Initialize Ghost Content API
 const api = new GhostContentAPI({
-  url: process.env.GHOST_URL!,
-  key: process.env.GHOST_CONTENT_API_KEY!,
+  url: ghostUrl,
+  key: ghostKey || '',
   version: 'v5.0'
 });
+
+const ensureConfigured = () => {
+  if (!ghostKey) {
+    throw new Error('Missing GHOST_CONTENT_API_KEY. Configure it in your environment.');
+  }
+};
 
 export interface Post {
   id: string;
@@ -79,15 +92,17 @@ export interface Author {
 }
 
 // Fetch all posts with pagination
-export const getPosts = async (limit = 12, page = 1): Promise<{ posts: Post[], meta: any }> => {
+export const getPosts = async (limit = 12, page = 1): Promise<{ posts: Post[], meta: unknown }> => {
   try {
+    ensureConfigured();
     const posts = await api.posts.browse({
       limit,
       page,
       include: ['tags', 'authors'],
       formats: ['html', 'plaintext']
     });
-    return { posts: posts as Post[], meta: (posts as any).meta };
+    const postsWithMeta = posts as Post[] & { meta?: unknown };
+    return { posts: posts as Post[], meta: postsWithMeta.meta ?? null };
   } catch (error) {
     console.error('Error fetching posts:', error);
     return { posts: [], meta: null };
@@ -97,6 +112,7 @@ export const getPosts = async (limit = 12, page = 1): Promise<{ posts: Post[], m
 // Fetch featured posts for hero section
 export const getFeaturedPosts = async (limit = 6): Promise<Post[]> => {
   try {
+    ensureConfigured();
     const posts = await api.posts.browse({
       limit,
       filter: 'featured:true',
@@ -113,11 +129,14 @@ export const getFeaturedPosts = async (limit = 6): Promise<Post[]> => {
 // Fetch single post by slug
 export const getPostBySlug = async (slug: string): Promise<Post | null> => {
   try {
-    const post = await api.posts.read({
-      slug,
-      include: ['tags', 'authors'],
-      formats: ['html', 'plaintext']
-    });
+    ensureConfigured();
+    const post = await api.posts.read(
+      { slug },
+      {
+        include: ['tags', 'authors'],
+        formats: ['html', 'plaintext']
+      }
+    );
     return post as Post;
   } catch (error) {
     console.error('Error fetching post:', error);
@@ -128,6 +147,7 @@ export const getPostBySlug = async (slug: string): Promise<Post | null> => {
 // Fetch all tags
 export const getTags = async (): Promise<Tag[]> => {
   try {
+    ensureConfigured();
     const tags = await api.tags.browse({
       include: ['count.posts']
     });
@@ -141,6 +161,7 @@ export const getTags = async (): Promise<Tag[]> => {
 // Fetch posts by tag
 export const getPostsByTag = async (tagSlug: string, limit = 12): Promise<Post[]> => {
   try {
+    ensureConfigured();
     const posts = await api.posts.browse({
       limit,
       filter: `tag:${tagSlug}`,

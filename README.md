@@ -2,7 +2,7 @@
 
 A cinematic blog for a filmmaker documenting cinema, travel across India, and political observations. 
 
-**Architecture**: Next.js frontend consuming Ghost as a headless CMS via Content API.
+**Architecture**: Next.js frontend (public site) consuming Ghost as a headless CMS via Content API.
 
 Target domain:
 - hitchhikerdiary.pavalep.com
@@ -30,8 +30,8 @@ docker compose up -d
 
 3. Access the applications:
 - **Blog Frontend** (Next.js): `http://localhost:3000`
-- **Ghost Admin** (Content Management): `http://localhost:8088/ghost`
-- **Ghost API** (Headless): `http://localhost:8088`
+- **Ghost Admin** (Content Management): `http://localhost:8088/ghost` (localhost only)
+- **Ghost API** (Headless): `http://localhost:8088` (localhost only)
 
 ## Architecture Overview
 
@@ -69,11 +69,12 @@ You said you will handle Cloudflare yourself. Use this flow:
 1. Add `A` record in Cloudflare:
 	- Name: `hitchhikerdiary`
 	- Value: your VPS public IP
-2. On the server, run Nginx (or Caddy) and proxy to `127.0.0.1:2368`.
-3. Enable SSL certificate for `hitchhikerdiary.pavalep.com`.
-4. Update `.env`:
+2. On the server, run Nginx (or Caddy) and proxy public traffic to Next.js at `127.0.0.1:3000`.
+3. Keep Ghost headless-only: expose Ghost only on localhost (`127.0.0.1:8088`) and optionally proxy `/ghost/` for admin.
+4. Enable SSL certificate for `hitchhikerdiary.pavalep.com`.
+5. Update `.env`:
 	- `GHOST_URL=https://hitchhikerdiary.pavalep.com`
-5. Restart Ghost after URL changes:
+6. Restart services after URL changes:
 
 ```bash
 docker compose down
